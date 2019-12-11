@@ -1,0 +1,10 @@
+{
+    "type": "mysql",
+    "host": "localhost",
+    "port": 3306,
+    "username": "nest",
+    "password": "pipexx221",
+    "database": "sendmyapp.db",
+    "entities": ["dist/**/*.entity{.ts,.js}"],
+    "synchronize": true
+}
