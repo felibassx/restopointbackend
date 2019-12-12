@@ -2,7 +2,7 @@ import { Injectable, HttpException, HttpStatus, Logger } from '@nestjs/common';
 import { UserDto } from '../../dto/user-dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from '../../entities/user-entity';
+import { User } from '../../entities/user.entity';
 import { messageGeneric } from '../../utils/texts.string';
 import * as bcrypt from 'bcrypt';
 
@@ -53,7 +53,7 @@ export class UsersService {
 
         user = await this._userRepository.create(userDto);
         await this._userRepository.save(user);
-        return user.toResponseObject();
+        return user.toResponseObject(false);
     }
 
     async update(id: number, userDto: UserDto) {

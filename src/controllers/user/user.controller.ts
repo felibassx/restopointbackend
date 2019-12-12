@@ -8,24 +8,31 @@ import { UserDto } from '../../dto/user-dto';
 export class UserController {
     constructor(
         private _usersService: UsersService,
-    ) {}
+    ) { }
 
     @Get()
     getAll(@Res() response) {
         this._usersService.getAll()
             .then(
-                registers => {
-
-                    if (!registers) {
-                        response.status(HttpStatus.SERVICE_UNAVAILABLE).json({ registers, message: messageGeneric.errorHttpNoDataPlu });
-                    } else {
-                        response.status(HttpStatus.OK).json(registers);
-                    }
+                resp => {
+                    response.status(HttpStatus.OK).json(
+                        {
+                            ok: true,
+                            resp,
+                            mensaje: messageGeneric.okMsgGetData
+                        }
+                    );
                 },
             )
             .catch(
                 resp => {
-                    response.status(HttpStatus.NO_CONTENT).json({ resp, message: messageGeneric.errorHttpNoDataPlu });
+                    response.status(HttpStatus.FORBIDDEN).json(
+                        {
+                            ok: false,
+                            resp,
+                            mensaje: messageGeneric.errorHttpNoDataPlu
+                        }
+                    );
                 },
             );
     }
@@ -35,12 +42,29 @@ export class UserController {
         this._usersService.getOne(id)
             .then(
                 resp => {
-                    response.status(HttpStatus.OK).json(resp);
+
+                    resp.password = '--';
+                    resp.secret = '--';
+                    resp.respSecret = '--';
+                    
+                    response.status(HttpStatus.OK).json(
+                        {
+                            ok: true,
+                            resp,
+                            mensaje: messageGeneric.okMsgGetData
+                        }
+                    );
                 },
             )
             .catch(
                 resp => {
-                    response.status(HttpStatus.NO_CONTENT).json({resp, message: messageGeneric.errorHttpNoDataSin});
+                    response.status(HttpStatus.FORBIDDEN).json(
+                        {
+                            ok: false,
+                            resp,
+                            mensaje: messageGeneric.errorHttpNoDataSin
+                        }
+                    );
                 },
             );
     }
@@ -48,16 +72,28 @@ export class UserController {
     @Post()
     create(@Res() response, @Body() _dto: UserDto) {
         this._usersService.create(_dto)
-        .then(
-            resp => {
-                response.status(HttpStatus.CREATED).json({resp, message: messageGeneric.okMsgInsert});
-            },
-        )
-        .catch(
-            resp => {
-                response.status(HttpStatus.FORBIDDEN).json({resp, message: messageGeneric.errorMsgInsert});
-            },
-        );     
+            .then(
+                resp => {
+                    response.status(HttpStatus.OK).json(
+                        {
+                            ok: true,
+                            resp,
+                            mensaje: messageGeneric.okMsgInsert
+                        }
+                    );
+                },
+            )
+            .catch(
+                resp => {
+                    response.status(HttpStatus.FORBIDDEN).json(
+                        {
+                            ok: false,
+                            resp,
+                            mensaje: messageGeneric.errorMsgInsert
+                        }
+                    );
+                },
+            );
     }
 
     @Put(':id')
@@ -65,12 +101,24 @@ export class UserController {
         this._usersService.update(id, _dto)
         .then(
             resp => {
-                response.status(HttpStatus.OK).json({resp, message: messageGeneric.okMsgUpdate});
+                response.status(HttpStatus.OK).json(
+                    {
+                        ok: true,
+                        resp,
+                        mensaje: messageGeneric.okMsgUpdate
+                    }
+                );
             },
         )
         .catch(
             resp => {
-                response.status(HttpStatus.FORBIDDEN).json({resp, message: messageGeneric.errorMsgUpdate});
+                response.status(HttpStatus.FORBIDDEN).json(
+                    {
+                        ok: false,
+                        resp,
+                        mensaje: messageGeneric.errorMsgUpdate
+                    }
+                );
             },
         );
     }
@@ -80,12 +128,24 @@ export class UserController {
         this._usersService.delete(id)
         .then(
             resp => {
-                response.status(HttpStatus.OK).json({resp, message: messageGeneric.okMsgDelete});
+                response.status(HttpStatus.OK).json(
+                    {
+                        ok: true,
+                        resp,
+                        mensaje: messageGeneric.okMsgDelete
+                    }
+                );
             },
         )
         .catch(
             resp => {
-                response.status(HttpStatus.FORBIDDEN).json({resp, mensaje: messageGeneric.errorMsgDelete});
+                response.status(HttpStatus.FORBIDDEN).json(
+                    {
+                        ok: false,
+                        resp,
+                        mensaje: messageGeneric.errorMsgDelete
+                    }
+                );
             },
         );
     }

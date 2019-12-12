@@ -2,6 +2,7 @@ export const messageGeneric = {
     okMsgInsert: 'Registro creado con éxito',
     okMsgUpdate: 'Registro actualziado con éxito',
     okMsgDelete: 'Registro eliminado con éxito',
+    okMsgGetData: 'Datos obtenidos con éxito',
     errorPasswordNoEqual: 'Las password deben ser iguales, intente otra vez',
     errorLoginUserPass: 'El Email o la password ingresados no son válidos',
     errorUserExist: 'El email que intenta registrar ya existe',

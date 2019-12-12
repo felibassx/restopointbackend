@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { Privilege } from './privilege-entity';
-import { User } from './user-entity';
+import { Privilege } from './privilege.entity';
+import { User } from './user.entity';
 
 @Entity()
 export class Role {

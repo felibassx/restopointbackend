@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, ManyToOne } from 'typeorm';
-import { Menu } from './menu-entity';
-import { Role } from './role-entity';
+import { Menu } from './menu.entity';
+import { Role } from './role.entity';
 
 @Entity()
 export class Privilege {

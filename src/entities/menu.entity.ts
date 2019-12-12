@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from 'typeorm';
-import { Option } from './option-entity';
-import { Page } from './page-entity';
+import { Option } from './option.entity';
+import { Page } from './page.entity';
 
 @Entity()
 export class Menu {

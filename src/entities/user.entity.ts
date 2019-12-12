@@ -1,15 +1,15 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, OneToMany, BeforeInsert } from 'typeorm';
-import { Employee } from './employee-entity';
-import { Role } from './role-entity';
+import { Employee } from './employee.entity';
+import { Role } from './role.entity';
 
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import { UserRO } from 'src/dto/user-dto';
 import { Logger } from '@nestjs/common';
+import { ConfigService } from '../config/config.service';
 
 @Entity()
 export class User {
-
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -57,8 +57,7 @@ export class User {
   async comparePassword2(fromapi: string, serverpass: string): Promise<boolean> {
     
     const encript = await bcrypt.hash(fromapi, 10);
-    Logger.log(`COMPARAR1:  ${encript}`, 'USER_ENTITY');
-    Logger.log(`COMPARAR2:  ${serverpass}`, 'USER_ENTITY');
+    
     return await bcrypt.compare(encript, serverpass);
   }
 
@@ -81,12 +80,16 @@ export class User {
   private get token(): string {
     const { id, email } = this;
 
+    const config = new ConfigService(`${process.env.NODE_ENV || 'development'}.env`);
+
+    Logger.log(`SECRET ENV:  ${config.sercret}`, 'SECRET');
+
     return jwt.sign(
       {
         id,
         email,
       },
-      'Es03sUnsecr3t', // process.env.SECRET,
+      config.sercret,
       { expiresIn: '7d' },
     );
   }
