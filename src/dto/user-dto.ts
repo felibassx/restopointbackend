@@ -9,8 +9,6 @@ export class UserDto {
     @IsNotEmpty()
     password: string;
 
-    passwordConfirm: string;
-
     secret: string;
     respSecret: string;
 

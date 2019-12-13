@@ -47,9 +47,9 @@ export class UsersService {
             throw new HttpException(messageGeneric.errorUserExist, HttpStatus.BAD_REQUEST);
         }
 
-        if (!this.confirmPassword(userDto.password, userDto.passwordConfirm)) {
-            throw new HttpException(messageGeneric.errorPasswordNoEqual, HttpStatus.BAD_REQUEST);
-        }
+        // if (!this.confirmPassword(userDto.password, userDto.passwordConfirm)) {
+        //     throw new HttpException(messageGeneric.errorPasswordNoEqual, HttpStatus.BAD_REQUEST);
+        // }
 
         user = await this._userRepository.create(userDto);
         await this._userRepository.save(user);
@@ -74,13 +74,4 @@ export class UsersService {
 
         return await this._userRepository.delete(id);
     }
-
-    confirmPassword(pass: string, passConfirm: string) {
-        if (pass === passConfirm) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
 }

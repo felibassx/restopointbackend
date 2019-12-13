@@ -12,3 +12,7 @@ export const messageGeneric = {
     errorHttpNoDataPlu: 'Error, no se encontraron registros',
     errorHttpNoDataSin: 'Error, no se encontró el registro solicitado',
   };
+
+export const messagePersonalize = {
+  
+};

@@ -18,8 +18,7 @@ export class User {
 
   @Column()
   password: string;
-
-  passwordConfirm: string;
+  
   ok: boolean;
   message: string;
 
@@ -54,13 +53,6 @@ export class User {
     return await bcrypt.compare(attempt, this.password);
   }
 
-  async comparePassword2(fromapi: string, serverpass: string): Promise<boolean> {
-    
-    const encript = await bcrypt.hash(fromapi, 10);
-    
-    return await bcrypt.compare(encript, serverpass);
-  }
-
   toResponseObject(showToken: boolean = true): UserRO {
     const { id, cratedDate, email, token } = this;
 
@@ -80,9 +72,9 @@ export class User {
   private get token(): string {
     const { id, email } = this;
 
-    const config = new ConfigService(`${process.env.NODE_ENV || 'development'}.env`);
+    const config = new ConfigService(`${process.env.NODE_ENV || 'configuration'}.env`);
 
-    Logger.log(`SECRET ENV:  ${config.sercret}`, 'SECRET');
+    // Logger.log(`SECRET ENV:  ${config.sercret}`, 'SECRET');
 
     return jwt.sign(
       {
